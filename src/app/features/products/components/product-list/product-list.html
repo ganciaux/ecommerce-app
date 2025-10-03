@@ -2,6 +2,7 @@
 @let loading=loading$ | async;
 
 {{loading ? 'Loading...' : ''}}
+{{error$ ? 'Error loading products' : ''}}
 
 @for(product of products; track product.id) {
   <div>{{ product.name }}</div>

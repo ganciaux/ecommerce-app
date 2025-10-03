@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environments';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, catchError, map, Observable, of, Subject, takeUntil } from 'rxjs';
+import { BehaviorSubject, map, Subject, takeUntil } from 'rxjs';
 import { Product, ProductFilters, ProductState } from '../models/product.interface';
 
 @Injectable({
