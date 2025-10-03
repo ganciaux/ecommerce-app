@@ -1,0 +1,6 @@
+mkdir -p src/app/features/products/{components,services,models,pages}
+mkdir -p src/app/features/cart/{components,services,models,pages} 
+mkdir -p src/app/features/shared/{ui,utils}
+mkdir -p src/app/core/{interceptors,guards,services}
+
+npx json-server --watch db.json --port 3000

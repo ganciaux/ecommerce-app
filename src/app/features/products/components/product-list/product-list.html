@@ -1,0 +1,8 @@
+@let products=products$ | async;
+@let loading=loading$ | async;
+
+{{loading ? 'Loading...' : ''}}
+
+@for(product of products; track product.id) {
+  <div>{{ product.name }}</div>
+}

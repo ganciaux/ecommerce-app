@@ -1,0 +1,42 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "iPhone 15",
+      "price": 999,
+      "category": "electronics",
+      "image": "https://via.placeholder.com/300x300?text=iPhone",
+      "description": "Dernier iPhone avec écran Dynamic Island",
+      "stock": 50,
+      "rating": 4.5
+    },
+    {
+      "id": 2,
+      "name": "MacBook Pro",
+      "price": 1999,
+      "category": "electronics", 
+      "image": "https://via.placeholder.com/300x300?text=MacBook",
+      "description": "Ordinateur portable professionnel",
+      "stock": 25,
+      "rating": 4.8
+    },
+    {
+      "id": 3,
+      "name": "T-shirt Cotton",
+      "price": 29,
+      "category": "clothing",
+      "image": "https://via.placeholder.com/300x300?text=T-shirt",
+      "description": "T-shirt 100% cotton confortable",
+      "stock": 100,
+      "rating": 4.2
+    }
+  ],
+  "categories": [{
+    "id": 1, "name": "electronics"
+  }, 
+  {"id":2, "name":"clothing"},
+  {"id":2, "name":"clothing"},
+  {"id":3, "name":"books"},
+  {"id":4, "name":"home"}],
+  "cart": []
+}
