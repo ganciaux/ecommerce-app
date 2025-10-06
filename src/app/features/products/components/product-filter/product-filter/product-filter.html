@@ -1,0 +1,26 @@
+<div class="filters">
+  <h3>Filtres</h3>
+
+  <div class="filter-group">
+    <label>Catégorie</label>
+    <select (change)="changeCategory($event)">
+      <option value="all">Toutes</option>
+      <option value="electronics">Électronique</option>
+      <option value="clothing">Vêtements</option>
+    </select>
+  </div>
+
+  <div class="filter-group">
+    <label>Prix max</label>
+    <input
+      type="range"
+      min="0"
+      max="1000"
+      [value]="currentMaxPrice"
+      (change)="changePrice($event)"
+    />
+    <span>{{ currentMaxPrice }}</span>
+  </div>
+
+  <button class="apply-filters">Appliquer</button>
+</div>

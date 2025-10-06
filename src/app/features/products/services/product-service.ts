@@ -1,22 +1,22 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environments';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, map, Subject, takeUntil } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, Subject, takeUntil } from 'rxjs';
 import { Product, ProductFilters, ProductState } from '../models/product.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService {
   private destroy$ = new Subject<void>();
   private state = new BehaviorSubject<ProductState>({ data: null, loading: false, error: null });
-  private httpClient=inject(HttpClient);
-  private apiUrl = environment.apiUrl
+  private httpClient = inject(HttpClient);
+  private apiUrl = environment.apiUrl;
 
   state$ = this.state.asObservable();
-  products$ = this.state$.pipe(map(state => state.data));
-  loading$ = this.state$.pipe(map(state => state.loading));
-  error$ = this.state$.pipe(map(state => state.error));
+  products$ = this.state$.pipe(map((state) => state.data));
+  loading$ = this.state$.pipe(map((state) => state.loading));
+  error$ = this.state$.pipe(map((state) => state.error));
 
   private setLoading(loading: boolean): void {
     this.state.next({ ...this.state.value, loading, error: null });
@@ -36,11 +36,11 @@ export class ProductService {
     return '❌ Erreur lors du chargement des produits.';
   }
 
-  loadProducts(filters?: ProductFilters):void{
+  loadProducts(filters?: ProductFilters): void {
     let params = new HttpParams();
 
     this.setLoading(true);
-      
+
     if (filters?.category) {
       params = params.set('category', filters.category);
     }
@@ -48,38 +48,49 @@ export class ProductService {
     if (filters?.minPrice !== undefined) {
       params = params.set('price_gte', filters.minPrice.toString());
     }
-    
+
     if (filters?.maxPrice !== undefined) {
       params = params.set('price_lte', filters.maxPrice.toString());
     }
-    
+
     if (filters?.search) {
       params = params.set('q', filters.search);
     }
 
     if (filters?.page) params = params.set('_page', filters.page);
-    
+
     if (filters?.limit) params = params.set('_limit', filters.limit);
 
-    this.httpClient.get<Product[]>(`${this.apiUrl}/products`, { params })
-     .pipe(takeUntil(this.destroy$))
-    .subscribe({
-      next: (products) => {
-        this.setState({ 
-          data: products, 
-          loading: false, 
-          error: null 
-        });
-      },
-      error: (error: HttpErrorResponse) => {
-        const errorMessage = this.getProductErrorMessage(error);
-        this.setState({ 
-          data: null, 
-          loading: false, 
-          error: errorMessage 
-        });
-      }
-    });
-  };
+    this.httpClient
+      .get<Product[]>(`${this.apiUrl}/products`, { params })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (products) => {
+          this.setState({
+            data: products,
+            loading: false,
+            error: null,
+          });
+        },
+        error: (error: HttpErrorResponse) => {
+          const errorMessage = this.getProductErrorMessage(error);
+          this.setState({
+            data: null,
+            loading: false,
+            error: errorMessage,
+          });
+        },
+      });
+  }
 
+  getProduct(id: number): Observable<Product> {
+    return this.httpClient.get<Product>(`${this.apiUrl}/products/${id}`).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 404) {
+          throw new Error('Produit non trouvé');
+        }
+        throw new Error('Erreur de chargement du produit');
+      })
+    );
+  }
 }

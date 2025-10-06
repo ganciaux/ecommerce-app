@@ -1,0 +1,23 @@
+@let isAuthenticated = isAuthenticated$ | async;
+
+<header class="header">
+  <div class="container">
+    <div class="logo">
+      <h1>🛍️ Ecommerce</h1>
+    </div>
+
+    <nav class="nav">
+      @if(isAuthenticated){
+      <a routerLink="/logout" class="nav-link">Logout</a>
+      }@else {
+      <a routerLink="/login" class="nav-link">Login</a>
+      }
+      <a routerLink="/products" class="nav-link">Produits</a>
+      <a routerLink="/cart" class="nav-link">Panier (0)</a>
+    </nav>
+
+    <div class="search">
+      <input type="text" placeholder="Rechercher..." class="search-input" />
+    </div>
+  </div>
+</header>

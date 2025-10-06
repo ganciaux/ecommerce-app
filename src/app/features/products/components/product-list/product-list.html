@@ -1,9 +1,21 @@
-@let products=products$ | async;
-@let loading=loading$ | async;
+<div class="product-list">
+  <!-- Loading/Error LOCAL à cette liste -->
+  @if (loading$ | async) {
+  <app-loading-spinner message="Chargement des produits..." [center]="true"> </app-loading-spinner>
+  } @if (error$ | async; as error) {
+  <app-error-display [message]="error" (onRetry)="loadProducts()"> </app-error-display>
+  }
 
-{{loading ? 'Loading...' : ''}}
-{{error$ ? 'Error loading products' : ''}}
-
-@for(product of products; track product.id) {
-  <div>{{ product.name }}</div>
-}
+  <!-- Liste des produits -->
+  @if (products$ | async; as products) { @if (products && products.length > 0) {
+  <div class="products-grid">
+    @for (product of products; track product.id) {
+    <app-product-card [product]="product"></app-product-card>
+    }
+  </div>
+  } @else if (!(loading$ | async) && !(error$ | async)) {
+  <div class="empty-state">
+    <p>Aucun produit trouvé</p>
+  </div>
+  } }
+</div>
