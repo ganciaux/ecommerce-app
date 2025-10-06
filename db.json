@@ -38,5 +38,21 @@
   {"id":2, "name":"clothing"},
   {"id":3, "name":"books"},
   {"id":4, "name":"home"}],
-  "cart": []
+  "cart": [],
+  "login": {
+    "user": {
+      "id": 1,
+      "email": "test@example.com", 
+      "name": "Test User"
+    },
+    "token": "mock-jwt-token"
+  },
+  "users": [
+    {
+      "id": 1,
+      "email": "test@example.com",
+      "password": "password123",
+      "name": "Test User"
+    }
+  ]
 }

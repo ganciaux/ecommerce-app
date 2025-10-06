@@ -4,11 +4,16 @@ import { ProductListPage } from './features/products/pages/product-list-page/pro
 import { ProductDetailsPage } from './features/products/components/product-details-page/product-details-page/product-details-page';
 import { productResolverResolver } from './features/products/resolvers/product.resolver-resolver';
 import { LoginPageComponent } from './features/auth/pages/login-page/login-page.component/login-page.component';
+import { UserListComponent } from './features/users/pages/user-list/user-list.component/user-list.component';
 
 export const routes: Routes = [
   {
     path: 'products',
     component: ProductListPage,
+  },
+  {
+    path: 'users',
+    component: UserListComponent,
   },
   {
     path: 'login',

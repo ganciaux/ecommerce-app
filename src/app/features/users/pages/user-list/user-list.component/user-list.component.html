@@ -1,0 +1,7 @@
+@let users = users$ | async;
+
+@for(user of users; track user.id) {
+  <div>
+    <p>{{ user.name }} ({{ user.email }})</p>
+  </div>
+}
